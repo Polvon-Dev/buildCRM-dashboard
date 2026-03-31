@@ -1,0 +1,58 @@
+import { User } from '@/shared/types';
+
+export const mockUsers: User[] = [
+  {
+    id: 'u1',
+    fullName: 'Abdullayev Shavkat Karimovich',
+    role: 'rahbar',
+    phone: '+998901234567',
+    email: 'shavkat@buildcrm.uz',
+    status: 'active',
+    createdAt: '2025-01-01T00:00:00Z',
+  },
+  {
+    id: 'u2',
+    fullName: 'Karimov Botir Rustamovich',
+    role: 'prorab',
+    phone: '+998901234568',
+    status: 'active',
+    projectId: 'p1',
+    createdAt: '2025-01-15T00:00:00Z',
+  },
+  {
+    id: 'u3',
+    fullName: 'Yusupov Anvar Salimovich',
+    role: 'prorab',
+    phone: '+998901234569',
+    status: 'active',
+    projectId: 'p2',
+    createdAt: '2025-02-01T00:00:00Z',
+  },
+  {
+    id: 'u4',
+    fullName: 'Toshmatov Javlon Bahodirovich',
+    role: 'ombor',
+    phone: '+998901234570',
+    status: 'active',
+    createdAt: '2025-01-10T00:00:00Z',
+  },
+  {
+    id: 'u5',
+    fullName: 'Rahimov Sardor Ilhomovich',
+    role: 'admin',
+    phone: '+998901234571',
+    status: 'active',
+    createdAt: '2025-01-05T00:00:00Z',
+  },
+  {
+    id: 'u6',
+    fullName: 'Normatov Dilshod Akmalovich',
+    role: 'prorab',
+    phone: '+998901234572',
+    status: 'blocked',
+    blockedBy: 'u1',
+    blockReason: "Hisobotlarda nomuvofiqliq aniqlangan",
+    projectId: 'p3',
+    createdAt: '2025-03-01T00:00:00Z',
+  },
+];
