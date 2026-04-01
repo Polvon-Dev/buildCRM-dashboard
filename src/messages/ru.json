@@ -130,6 +130,24 @@
     "worst": "Худшие показатели",
     "commentRequired": "Комментарий к оценке обязателен"
   },
+  "roles": {
+    "rahbar": "Руководитель",
+    "prorab": "Прораб",
+    "ombor": "Кладовщик",
+    "admin": "Админ"
+  },
+  "header": {
+    "notifications": "Уведомления",
+    "noNotifications": "Нет уведомлений",
+    "new": "новых",
+    "viewAll": "Показать все",
+    "selectLanguage": "Выберите язык",
+    "profile": "Профиль",
+    "logout": "Выход",
+    "search": "Поиск...",
+    "criticalAlerts": "{count} критических предупреждений!",
+    "loading": "Загрузка..."
+  },
   "signature": {
     "title": "Электронная подпись",
     "confirm": "Подтверждаю",

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils';
 import { useAuthStore } from '@/features/auth/model/authStore';
 import { useNotificationStore } from '@/entities/notification/model/store';
@@ -31,44 +32,44 @@ import {
 } from 'lucide-react';
 import type { NotificationType, UserRole } from '@/shared/types';
 
-const roleLabels: Record<UserRole, string> = {
-  rahbar: 'Rahbar',
-  prorab: 'Prorab',
-  ombor: 'Omborchi',
-  admin: 'Admin',
+const roleKeys: Record<UserRole, string> = {
+  rahbar: 'roles.rahbar',
+  prorab: 'roles.prorab',
+  ombor: 'roles.ombor',
+  admin: 'roles.admin',
 };
 
-// Map route segments to page titles
-const routeTitles: Record<string, string> = {
-  rahbar: 'Dashboard',
-  prorab: 'Dashboard',
-  ombor: 'Dashboard',
-  admin: 'Dashboard',
-  projects: 'Loyihalar',
-  finance: 'Moliya',
-  norms: 'Normativlar',
-  auctions: 'Auktsionlar',
-  workers: 'Ishchilar',
-  warehouse: 'Ombor',
-  suppliers: 'Yetkazib beruvchilar',
-  photos: 'Rasmlar',
-  reports: 'Hisobotlar',
-  ratings: 'Reytinglar',
-  notifications: 'Bildirishnomalar',
-  tasks: 'Vazifalar',
-  materials: 'Materiallar',
-  'work-volume': 'Ish hajmi',
-  incoming: 'Kirim',
-  outgoing: 'Chiqim',
-  requests: "So'rovlar",
-  'inventory-check': 'Inventarizatsiya',
-  receipts: 'Cheklar',
-  deliveries: 'Yetkazib berish',
-  'low-stock': 'Kam qoldiq',
-  attendance: 'Davomat',
-  issues: 'Muammolar',
-  activity: 'Faoliyat',
-  users: 'Foydalanuvchilar',
+// Map route segments to nav translation keys
+const routeTitleKeys: Record<string, string> = {
+  rahbar: 'nav.dashboard',
+  prorab: 'nav.dashboard',
+  ombor: 'nav.dashboard',
+  admin: 'nav.dashboard',
+  projects: 'nav.projects',
+  finance: 'nav.finance',
+  norms: 'nav.norms',
+  auctions: 'nav.auctions',
+  workers: 'nav.workers',
+  warehouse: 'nav.warehouse',
+  suppliers: 'nav.suppliers',
+  photos: 'nav.photos',
+  reports: 'nav.reports',
+  ratings: 'nav.ratings',
+  notifications: 'nav.notifications',
+  tasks: 'nav.tasks',
+  materials: 'nav.materials',
+  'work-volume': 'nav.workVolume',
+  incoming: 'nav.incoming',
+  outgoing: 'nav.outgoing',
+  requests: 'nav.requests',
+  'inventory-check': 'nav.inventoryCheck',
+  receipts: 'nav.receipts',
+  deliveries: 'nav.deliveries',
+  'low-stock': 'nav.lowStock',
+  attendance: 'nav.attendance',
+  issues: 'nav.issues',
+  activity: 'nav.activity',
+  users: 'nav.users',
 };
 
 const notificationTypeConfig: Record<
@@ -95,6 +96,7 @@ export function Header({ onMenuToggle }: HeaderProps) {
   const [searchOpen, setSearchOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
+  const t = useTranslations();
   const { user, logout } = useAuthStore();
   const { notifications, unreadCount, markAsRead } = useNotificationStore();
 
@@ -105,7 +107,8 @@ export function Header({ onMenuToggle }: HeaderProps) {
   // Get page title from the last meaningful route segment
   const pathSegments = pathname.replace(/^\/[a-z]{2}/, '').split('/').filter(Boolean);
   const lastSegment = pathSegments[pathSegments.length - 1] || pathSegments[0] || '';
-  const pageTitle = routeTitles[lastSegment] || 'Dashboard';
+  const titleKey = routeTitleKeys[lastSegment] || 'nav.dashboard';
+  const pageTitle = t(titleKey);
 
   // Get latest 5 unread notifications for this user
   const userNotifications = user
@@ -127,7 +130,6 @@ export function Header({ onMenuToggle }: HeaderProps) {
   const handleNotificationClick = (id: string, link?: string) => {
     markAsRead(id);
     if (link) {
-      // Add locale prefix if missing
       const fullLink = link.startsWith(`/${currentLocale}`) ? link : `/${currentLocale}${link}`;
       router.push(fullLink);
     }
@@ -167,7 +169,7 @@ export function Header({ onMenuToggle }: HeaderProps) {
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
           <Input
             type="search"
-            placeholder="Qidirish..."
+            placeholder={t('header.search')}
             className="h-9 w-64 rounded-full border-slate-200 bg-slate-50/80 pl-9 text-sm transition-all duration-200 placeholder:text-slate-400 focus:w-80 focus:bg-white focus:shadow-md"
           />
         </div>
@@ -202,11 +204,11 @@ export function Header({ onMenuToggle }: HeaderProps) {
         <DropdownMenuContent className="w-80 p-0">
           <div className="flex items-center justify-between border-b px-4 py-3">
             <DropdownMenuLabel className="p-0 text-sm font-semibold">
-              Bildirishnomalar
+              {t('header.notifications')}
             </DropdownMenuLabel>
             {unreadCount > 0 && (
               <Badge variant="destructive" className="text-[10px]">
-                {unreadCount} yangi
+                {unreadCount} {t('header.new')}
               </Badge>
             )}
           </div>
@@ -214,7 +216,7 @@ export function Header({ onMenuToggle }: HeaderProps) {
             {userNotifications.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-8 text-sm text-slate-400">
                 <Bell className="mb-2 h-8 w-8 text-slate-300" />
-                Bildirishnomalar yo&apos;q
+                {t('header.noNotifications')}
               </div>
             ) : (
               userNotifications.map((notification) => {
@@ -252,7 +254,7 @@ export function Header({ onMenuToggle }: HeaderProps) {
                         {notification.message}
                       </p>
                       <p className="mt-1 text-[10px] text-slate-400">
-                        {new Date(notification.createdAt).toLocaleDateString('uz-UZ')}
+                        {new Date(notification.createdAt).toLocaleDateString(currentLocale)}
                       </p>
                     </div>
                     {!notification.isRead && (
@@ -269,7 +271,7 @@ export function Header({ onMenuToggle }: HeaderProps) {
                 href={`/${currentLocale}/${user?.role || 'admin'}/notifications`}
                 className="block text-center text-xs font-medium text-blue-600 hover:text-blue-700"
               >
-                Hammasini ko&apos;rish
+                {t('header.viewAll')}
               </Link>
             </div>
           )}
@@ -290,7 +292,7 @@ export function Header({ onMenuToggle }: HeaderProps) {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-40">
           <DropdownMenuLabel className="text-xs text-slate-500">
-            Tilni tanlang
+            {t('header.selectLanguage')}
           </DropdownMenuLabel>
           {LOCALES.map((locale) => (
             <DropdownMenuItem
@@ -323,7 +325,7 @@ export function Header({ onMenuToggle }: HeaderProps) {
                 {user?.fullName || 'User'}
               </span>
               <span className="text-[10px] font-medium uppercase tracking-wider text-slate-400">
-                {user?.role ? roleLabels[user.role] : ''}
+                {user?.role ? t(roleKeys[user.role]) : ''}
               </span>
             </div>
           </button>
@@ -343,7 +345,7 @@ export function Header({ onMenuToggle }: HeaderProps) {
           <DropdownMenuSeparator />
           <DropdownMenuItem className="cursor-pointer gap-2">
             <User className="h-4 w-4 text-slate-400" />
-            Profil
+            {t('header.profile')}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
@@ -351,7 +353,7 @@ export function Header({ onMenuToggle }: HeaderProps) {
             onClick={handleLogout}
           >
             <LogOut className="h-4 w-4" />
-            Chiqish
+            {t('header.logout')}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -363,7 +365,7 @@ export function Header({ onMenuToggle }: HeaderProps) {
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
             <Input
               type="search"
-              placeholder="Qidirish..."
+              placeholder={t('header.search')}
               autoFocus
               className="h-10 w-full rounded-full border-slate-200 bg-slate-50 pl-9 text-sm"
             />

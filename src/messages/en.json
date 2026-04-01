@@ -130,6 +130,24 @@
     "worst": "Worst Performers",
     "commentRequired": "Comment is required for rating"
   },
+  "roles": {
+    "rahbar": "Director",
+    "prorab": "Foreman",
+    "ombor": "Warehouse Manager",
+    "admin": "Admin"
+  },
+  "header": {
+    "notifications": "Notifications",
+    "noNotifications": "No notifications",
+    "new": "new",
+    "viewAll": "View all",
+    "selectLanguage": "Select language",
+    "profile": "Profile",
+    "logout": "Logout",
+    "search": "Search...",
+    "criticalAlerts": "{count} critical alerts!",
+    "loading": "Loading..."
+  },
   "signature": {
     "title": "Digital Signature",
     "confirm": "I confirm",

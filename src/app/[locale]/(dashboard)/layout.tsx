@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils';
 import { useAuthStore } from '@/features/auth/model/authStore';
 import { useNotificationStore } from '@/entities/notification/model/store';
@@ -19,6 +20,7 @@ export default function DashboardLayout({
   const router = useRouter();
   const pathname = usePathname();
   const { user, isAuthenticated } = useAuthStore();
+  const t = useTranslations('header');
   const { notifications } = useNotificationStore();
 
   // Get locale from pathname
@@ -49,7 +51,7 @@ export default function DashboardLayout({
       <div className="flex h-screen items-center justify-center bg-slate-50">
         <div className="flex flex-col items-center gap-3">
           <div className="h-10 w-10 animate-spin rounded-full border-4 border-blue-500 border-t-transparent" />
-          <p className="text-sm text-slate-500">Yuklanmoqda...</p>
+          <p className="text-sm text-slate-500">{t('loading')}</p>
         </div>
       </div>
     );
@@ -72,7 +74,7 @@ export default function DashboardLayout({
               <p className="truncate text-sm font-medium">
                 {criticalNotifications.length === 1
                   ? criticalNotifications[0].title
-                  : `${criticalNotifications.length} ta muhim ogohlantirish mavjud!`}
+                  : t('criticalAlerts', { count: criticalNotifications.length })}
               </p>
               {criticalNotifications.length === 1 && (
                 <p className="truncate text-xs text-red-100">

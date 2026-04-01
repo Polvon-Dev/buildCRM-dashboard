@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils';
 import { useAuthStore } from '@/features/auth/model/authStore';
 import { useNotificationStore } from '@/entities/notification/model/store';
@@ -78,11 +78,11 @@ const roleBadgeColors: Record<UserRole, string> = {
   admin: 'bg-purple-500/20 text-purple-300 border-purple-500/30',
 };
 
-const roleLabels: Record<UserRole, string> = {
-  rahbar: 'Rahbar',
-  prorab: 'Prorab',
-  ombor: 'Omborchi',
-  admin: 'Admin',
+const roleKeys: Record<UserRole, string> = {
+  rahbar: 'roles.rahbar',
+  prorab: 'roles.prorab',
+  ombor: 'roles.ombor',
+  admin: 'roles.admin',
 };
 
 interface SidebarProps {
@@ -94,6 +94,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const pathname = usePathname();
   const locale = useLocale();
+  const t = useTranslations();
   const { user } = useAuthStore();
   const { unreadCount } = useNotificationStore();
 
@@ -195,7 +196,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 
                 {!isCollapsed && (
                   <>
-                    <span className="flex-1 truncate">{item.title}</span>
+                    <span className="flex-1 truncate">{t(item.title)}</span>
 
                     {badgeCount && badgeCount > 0 ? (
                       <span
@@ -220,7 +221,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                 {/* Collapsed tooltip */}
                 {isCollapsed && (
                   <div className="pointer-events-none absolute left-full z-50 ml-2 hidden rounded-md bg-slate-800 px-2.5 py-1.5 text-xs font-medium text-white shadow-xl group-hover:block">
-                    {item.title}
+                    {t(item.title)}
                     <div className="absolute -left-1 top-1/2 h-2 w-2 -translate-y-1/2 rotate-45 bg-slate-800" />
                   </div>
                 )}
@@ -261,7 +262,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                     roleBadgeColors[role]
                   )}
                 >
-                  {roleLabels[role]}
+                  {t(roleKeys[role])}
                 </span>
               </div>
             )}

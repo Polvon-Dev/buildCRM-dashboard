@@ -130,6 +130,24 @@
     "worst": "Eng yomon ko'rsatkichlar",
     "commentRequired": "Baho uchun izoh majburiy"
   },
+  "roles": {
+    "rahbar": "Rahbar",
+    "prorab": "Prorab",
+    "ombor": "Omborchi",
+    "admin": "Admin"
+  },
+  "header": {
+    "notifications": "Bildirishnomalar",
+    "noNotifications": "Bildirishnomalar yo'q",
+    "new": "yangi",
+    "viewAll": "Hammasini ko'rish",
+    "selectLanguage": "Tilni tanlang",
+    "profile": "Profil",
+    "logout": "Chiqish",
+    "search": "Qidirish...",
+    "criticalAlerts": "{count} ta muhim ogohlantirish mavjud!",
+    "loading": "Yuklanmoqda..."
+  },
   "signature": {
     "title": "Raqamli imzo",
     "confirm": "Tasdiqlayman",
